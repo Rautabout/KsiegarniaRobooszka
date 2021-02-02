@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import com.example.ksiegarniarobooszka.R
 
 class UserFragment : Fragment(){
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -15,4 +17,6 @@ class UserFragment : Fragment(){
     ): View? {
         return inflater.inflate(R.layout.fragment_user,container,false)
     }
+
+
 }

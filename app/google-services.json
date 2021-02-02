@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "637092183196",
+    "firebase_url": "https://ksiegarniarobooszka-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "ksiegarniarobooszka",
+    "storage_bucket": "ksiegarniarobooszka.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:637092183196:android:d62ad7bc2ae538ed608159",
+        "android_client_info": {
+          "package_name": "com.example.ksiegarniarobooszka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "637092183196-r8va848heg57k9st9tqm0jlo8soebq7r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgXlhWxfGPDdMWP1Qq_OdU4yZLN6f_Lnc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "637092183196-r8va848heg57k9st9tqm0jlo8soebq7r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
