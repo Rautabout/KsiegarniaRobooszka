@@ -4,4 +4,6 @@
     <string name="login_button">Zaloguj się</string>
     <string name="register_button">Zarejestruj się</string>
     <string name="search">Szukaj</string>
+    <string name="price">Cena:</string>
+    <string name="shop">Magazyn:</string>
 </resources>
