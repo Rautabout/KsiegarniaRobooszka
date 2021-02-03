@@ -8,5 +8,9 @@
     <string name="shop">Magazyn:</string>
     <string name="news">Nowości:</string>
     <string name="bestSale">Na topie:</string>
+    <string name="shoppingCart">Koszyk</string>
+    <string name="buy">Kup</string>
+    <string name="user">Użytkownik: </string>
+    <string name="total_price">Suma koszyka: </string>
 
 </resources>
