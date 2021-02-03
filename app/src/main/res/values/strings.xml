@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">KsiegarniaRobooszka</string>
+    <string name="want_register_button">Nie masz konta? Zarejestruj się tutaj!</string>
+    <string name="login_button">Zaloguj się</string>
+    <string name="register_button">Zarejestruj się</string>
     <string name="search">Szukaj</string>
 </resources>
