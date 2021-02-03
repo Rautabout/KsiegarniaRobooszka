@@ -49,4 +49,5 @@
         app:layout_constraintTop_toBottomOf="@+id/spinnerBookCategories"
         />
 
+
 </androidx.constraintlayout.widget.ConstraintLayout>
