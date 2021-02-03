@@ -27,7 +27,7 @@ class SearchFragment : Fragment(){
 
         context?.let { context ->
             val list = mutableListOf(
-                "Wszytskie",
+                "Wszystkie",
                 "Kryminały",
                 "Poradniki",
                 "Horrory"
@@ -47,7 +47,7 @@ class SearchFragment : Fragment(){
                     view.setTextColor(Color.parseColor("#3F6D99"))
 
                     if (position == spinnerBookCategories.selectedItemPosition) {
-                        view.background = ColorDrawable(Color.parseColor("#275388"))
+                        view.background = ColorDrawable(Color.parseColor("#80018786"))
                     }
                     return view
                 }
