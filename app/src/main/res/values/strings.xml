@@ -12,5 +12,6 @@
     <string name="buy">Kup</string>
     <string name="user">Użytkownik: </string>
     <string name="total_price">Suma koszyka: </string>
+    <string name="count">Ilość:</string>
 
 </resources>
