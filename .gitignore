@@ -1,8 +1,13 @@
+local.properties
+
 # Compiled class file
 *.class
 
 # Log file
 *.log
+*.bin
+*.ser
+
 
 # BlueJ files
 *.ctxt
