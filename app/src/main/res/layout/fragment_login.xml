@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background= "@drawable/background"
     android:orientation="horizontal">
 
 
@@ -34,6 +35,8 @@
         app:layout_constraintTop_toBottomOf="@+id/loginPassword"
         android:layout_marginTop="20dp"
         android:id="@+id/loginButton"
+        android:backgroundTint="@color/darkBlue"
+        android:textColor="@color/gray"
         android:text="@string/login_button"/>
 
     <Button
@@ -42,6 +45,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/darkBlue"
+        android:textColor="@color/gray"
         android:text="@string/want_register_button" />
 
 
