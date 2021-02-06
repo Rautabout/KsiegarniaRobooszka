@@ -5,44 +5,59 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ksiegarniarobooszka.View.MainActivity
 import com.example.ksiegarniarobooszka.R
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.android.synthetic.main.fragment_register.*
 
 
 class LoginFragment : AppCompatActivity() {
-    private lateinit var loginButton: Button
-    private lateinit var loginRegisterButton: Button
-    private lateinit var loginEmail:EditText
-    private lateinit var loginPassword:EditText
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_login)
-        loginButton=findViewById(R.id.loginButton)
-        loginRegisterButton=findViewById(R.id.loginRegisterButton)
+        val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
 
-
-
-
-
-
-        loginButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(view: View?) {
-                val intent = Intent(this@LoginFragment, MainActivity::class.java)
-                startActivity(intent)
+        loginButton.setOnClickListener{
+            val email = loginEmail.text.toString().trim()
+            val password = loginPassword.text.toString().trim()
+            if (email.isEmpty()) {
+                loginEmailWrapper.error = "Wprowadź swój e-mail"
+                loginEmailWrapper.requestFocus()
+                return@setOnClickListener
             }
-        })
-
-        loginRegisterButton.setOnClickListener(object :View.OnClickListener{
-            override fun onClick(v: View?) {
-                val intent =Intent(this@LoginFragment,RegisterFragment::class.java)
-                startActivity(intent)
+            else if (password.isEmpty()) {
+                loginPasswordWrapper.error = "Wprowadź swoje hasło"
+                loginPasswordWrapper.requestFocus()
+                return@setOnClickListener
             }
-        })
+            else {
+                mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener {
+                    task ->if(task.isSuccessful){
+                    val intent = Intent(this@LoginFragment, MainActivity::class.java)
+                    startActivity(intent)
+                }
+                    else{
+                    val message = task.exception!!.toString()
+                    Toast.makeText(this, "Error: $message", Toast.LENGTH_LONG).show()
+                }
+                }
+
+            }
+        }
+
+
+        loginRegisterButton.setOnClickListener {
+            val intent = Intent(this@LoginFragment, RegisterFragment::class.java)
+            startActivity(intent)
+        }
     }
 }
