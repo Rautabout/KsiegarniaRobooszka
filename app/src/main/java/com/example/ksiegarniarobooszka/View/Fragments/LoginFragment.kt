@@ -2,31 +2,37 @@ package com.example.ksiegarniarobooszka.View.Fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import com.example.ksiegarniarobooszka.View.MainActivity
+import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.example.ksiegarniarobooszka.R
+import com.example.ksiegarniarobooszka.View.MainActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.android.synthetic.main.fragment_register.*
+import kotlinx.android.synthetic.main.fragment_user.*
+
+class LoginFragment : Fragment(){
 
 
-class LoginFragment : AppCompatActivity() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_login,container,false)
 
+    }
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_login)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
-
         loginButton.setOnClickListener{
+
             val email = loginEmail.text.toString().trim()
             val password = loginPassword.text.toString().trim()
             if (email.isEmpty()) {
@@ -41,13 +47,13 @@ class LoginFragment : AppCompatActivity() {
             }
             else {
                 mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener {
-                    task ->if(task.isSuccessful){
-                    val intent = Intent(this@LoginFragment, MainActivity::class.java)
-                    startActivity(intent)
+                        task ->if(task.isSuccessful){
+                        val intent = Intent(activity, MainActivity::class.java)
+                        startActivity(intent)
                 }
-                    else{
+                else{
                     val message = task.exception!!.toString()
-                    Toast.makeText(this, "Error: $message", Toast.LENGTH_LONG).show()
+                    Toast.makeText(activity, "Error: $message", Toast.LENGTH_LONG).show()
                 }
                 }
 
@@ -56,7 +62,7 @@ class LoginFragment : AppCompatActivity() {
 
 
         loginRegisterButton.setOnClickListener {
-            val intent = Intent(this@LoginFragment, RegisterFragment::class.java)
+            val intent = Intent(activity, RegisterFragment::class.java)
             startActivity(intent)
         }
     }

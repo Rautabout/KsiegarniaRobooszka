@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ksiegarniarobooszka.Model.User
 import com.example.ksiegarniarobooszka.R
+import com.example.ksiegarniarobooszka.View.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_register.*
@@ -59,7 +60,7 @@ class RegisterFragment : AppCompatActivity() {
                         val ref=FirebaseDatabase.getInstance().getReference("users/$uid")
                         ref.setValue(user).addOnSuccessListener {
                             Toast.makeText(this, "User created", Toast.LENGTH_LONG).show()
-                            val intent = Intent(this@RegisterFragment, LoginFragment::class.java)
+                            val intent = Intent(this@RegisterFragment, MainActivity::class.java)
                             startActivity(intent)
                         }
 

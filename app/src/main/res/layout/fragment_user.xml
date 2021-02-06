@@ -10,8 +10,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Temp"
+        android:layout_margin="10dp"
         android:textSize="30sp"
+        android:id="@+id/currentUser"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/logOutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Wyloguj się"
+        app:layout_constraintBottom_toBottomOf="parent"
+         />
 
 
 
