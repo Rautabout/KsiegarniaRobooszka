@@ -10,15 +10,55 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.ksiegarniarobooszka.R
+import com.example.ksiegarniarobooszka.View.Book
+import com.example.ksiegarniarobooszka.View.BookListAdapter
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_search.*
 
 class SearchFragment : Fragment(){
+
+    private lateinit var bookAdapter: BookListAdapter
+    private lateinit var bookLayoutManager: LinearLayoutManager
+    private lateinit var bookRecyclerView: RecyclerView
+    private lateinit var products:DatabaseReference
+    private lateinit var fragmentView:View
+    var listOfItems = ArrayList<Book>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val firebase = FirebaseDatabase.getInstance()
+        products = firebase.getReference("products")
+        bookLayoutManager = LinearLayoutManager(context)
+        bookAdapter= BookListAdapter(listOfItems, context!!)
+        fragmentView = LayoutInflater.from(activity).inflate(R.layout.fragment_search, container, false)
+        bookRecyclerView = fragmentView?.findViewById(R.id.recycler_search)
+        bookRecyclerView?.setHasFixedSize(true)
+        bookRecyclerView?.layoutManager = LinearLayoutManager(context)
+        products?.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if(p0!!.exists()){
+                    for (h in p0.children){
+                        val bal = h.getValue(Book::class.java)
+                        listOfItems?.add(bal!!)
+                    }
+                    val adapter = BookListAdapter(listOfItems,context!!)
+                    bookRecyclerView?.setAdapter(adapter)
+                }
+            }
+        })
+
+
         return inflater.inflate(R.layout.fragment_search,container,false)
     }
 
@@ -30,7 +70,11 @@ class SearchFragment : Fragment(){
                 "Wszystkie",
                 "Kryminały",
                 "Poradniki",
-                "Horrory"
+                "Horrory",
+                "Komiksy",
+                "Fantastyka",
+                "Thrillery",
+                "Science-Fiction"
             )
             val adapter: ArrayAdapter<String> = object : ArrayAdapter<String>(
                 context, android.R.layout.simple_spinner_dropdown_item,
@@ -55,5 +99,11 @@ class SearchFragment : Fragment(){
             }
             spinnerBookCategories.adapter = adapter
         }
+
+        bookRecyclerView=recycler_search.apply {
+            this.layoutManager = bookLayoutManager
+            this.adapter = bookAdapter
+        }
     }
+
 }
