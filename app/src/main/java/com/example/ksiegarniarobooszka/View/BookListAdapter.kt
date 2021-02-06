@@ -36,14 +36,7 @@ class BookListAdapter(private val dataArray: ArrayList<Book>, private val con: C
 
         val book = dataArray[position]
 
-        //imageBook.setImageURI(book.image.toUri())
-//        val imageUrl = book.image
-//        val `in`: InputStream = URL(imageUrl).openStream()
-//        bmp = BitmapFactory.decodeStream(`in`)
-//
-//        imageBook.setImageBitmap(bmp)
-        //Picasso.get().load(book.image).into(imageBook)
-        Glide.with(con).load(book.image).into(imageBook);
+        Glide.with(con).load(book.thumbnail_url).into(imageBook);
         textViewTitle.text = book.title
         textViewAuthor.text = book.author
         textViewPrice.text = book.price.toString()
