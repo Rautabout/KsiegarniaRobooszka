@@ -43,22 +43,22 @@ class SearchFragment : Fragment(){
         bookLayoutManager = LinearLayoutManager(context)
         bookAdapter= BookListAdapter(listOfItems, context!!)
         fragmentView = LayoutInflater.from(activity).inflate(R.layout.fragment_search, container, false)
-        bookRecyclerView = fragmentView?.findViewById(R.id.recycler_search)
-        bookRecyclerView?.setHasFixedSize(true)
-        bookRecyclerView?.layoutManager = LinearLayoutManager(context)
-        products?.addValueEventListener(object : ValueEventListener {
+        bookRecyclerView = fragmentView.findViewById(R.id.recycler_search)
+        bookRecyclerView.setHasFixedSize(true)
+        bookRecyclerView.layoutManager = LinearLayoutManager(context)
+        products.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 Toast.makeText(context,"There is a problem with database.", Toast.LENGTH_LONG)
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                if(p0!!.exists()){
+                if(p0.exists()){
                     for (h in p0.children){
                         val bal = h.getValue(Book::class.java)
-                        listOfItems?.add(bal!!)
+                        listOfItems.add(bal!!)
                     }
                     val adapter = BookListAdapter(listOfItems,context!!)
-                    bookRecyclerView?.setAdapter(adapter)
+                    bookRecyclerView.setAdapter(adapter)
                 }
             }
         })
@@ -135,7 +135,7 @@ class SearchFragment : Fragment(){
                 }
 
                 val adapter = BookListAdapter(listOfCurrentItems,context!!)
-                bookRecyclerView?.setAdapter(adapter)
+                bookRecyclerView.setAdapter(adapter)
             }
 
         }
@@ -147,12 +147,47 @@ class SearchFragment : Fragment(){
 
         buttonSearch.setOnClickListener {
             view.hideKeyboard()
-            if((editTextAuthor.text.toString()!="")&&(editTextTitle.text.toString()!=""))
+            var author = editTextAuthor.text.toString()
+            var title = editTextTitle.text.toString()
+            listOfCurrentItems = ArrayList<Book>()
+            if((author!=""))
             {
-
+                if(title!="")
+                {
+                    for (item in listOfItems) {
+                        if ((item.author == author) && (item.title == title)) {
+                            listOfCurrentItems.add(item)
+                        }
+                    }
+                }
+                else {
+                    for (item in listOfItems) {
+                        if (item.author == author) {
+                            listOfCurrentItems.add(item)
+                        }
+                    }
+                }
             }
+            else {
+                if (title!="")
+                {
+                    for (item in listOfItems) {
+                        if (item.title == title){
+                            listOfCurrentItems.add(item)
+                        }
+                    }
+                }
+                else
+                {
+                    listOfCurrentItems = listOfItems
+                }
+            }
+            val adapter = BookListAdapter(listOfCurrentItems,context!!)
+            bookRecyclerView.setAdapter(adapter)
         }
+
     }
+
 
     fun View.hideKeyboard() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
