@@ -1,19 +1,17 @@
 package com.example.ksiegarniarobooszka.View.Fragments
 
-import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.ksiegarniarobooszka.Model.User
 import com.example.ksiegarniarobooszka.R
+import com.example.ksiegarniarobooszka.View.MainActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_register.*
 import java.util.*
-import kotlin.collections.HashMap
 
 
 class RegisterFragment : AppCompatActivity() {
@@ -24,75 +22,57 @@ class RegisterFragment : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_register)
 
+        val mAuth:FirebaseAuth=FirebaseAuth.getInstance()
 
-        registerButton.setOnClickListener{
-            CreateAccount()
-        }
 
-    }
-
-    private fun CreateAccount() {
-        val firstName=registerFirstName.text.toString()
-        val lastName=registerLastName.text.toString()
-        val email=registerEmail.text.toString()
-        val password=registerPassword.text.toString()
-        when{
-            TextUtils.isEmpty(firstName)->Toast.makeText(this,"Enter your first name",Toast.LENGTH_LONG)
-            TextUtils.isEmpty(lastName)->Toast.makeText(this,"Enter your last name",Toast.LENGTH_LONG)
-            TextUtils.isEmpty(email)->Toast.makeText(this,"Enter your email",Toast.LENGTH_LONG)
-            TextUtils.isEmpty(password)->Toast.makeText(this,"Enter your password",Toast.LENGTH_LONG)
-            else->{
-                val progressDialog=ProgressDialog(this@RegisterFragment)
-                progressDialog.setTitle("Register")
-                progressDialog.setMessage("Working...")
-                progressDialog.setCanceledOnTouchOutside(false)
-                progressDialog.show()
-                val mAuth:FirebaseAuth= FirebaseAuth.getInstance()
-                mAuth.createUserWithEmailAndPassword(email,password)
-                    .addOnCompleteListener{
-                        task->if (task.isSuccessful){
-
-                        saveUserInfo(firstName,lastName,email,progressDialog)
+        registerButton.setOnClickListener {
+            val firstName = registerFirstName.text.toString().trim()
+            val lastName = registerLastName.text.toString().trim()
+            val email = registerEmail.text.toString().trim()
+            val password = registerPassword.text.toString().trim()
+            if (mAuth.currentUser != null) {
+                //TODO
+            }
+            if (firstName.isEmpty()) {
+                registerFNameWrapper.error = "Wprowadź swoje imię"
+                registerFNameWrapper.requestFocus()
+                return@setOnClickListener
+            }
+            else if (lastName.isEmpty()) {
+                registerLNameWrapper.error = "Wprowadź swoje nazwisko"
+                registerLNameWrapper.requestFocus()
+                return@setOnClickListener
+            }
+            else if (email.isEmpty()) {
+                registerEmailWrapper.error = "Wprowadź swój e-mail"
+                registerEmailWrapper.requestFocus()
+                return@setOnClickListener
+            }
+            else if (password.isEmpty()) {
+                registerPasswordWrapper.error = "Wprowadź swoje hasło"
+                registerPasswordWrapper.requestFocus()
+                return@setOnClickListener
+            }else {
+                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val uid=FirebaseAuth.getInstance().uid?:""
+                        val user = User(uid,firstName, lastName, email)
+                        val ref=FirebaseDatabase.getInstance().getReference("users/$uid")
+                        ref.setValue(user).addOnSuccessListener {
+                            Toast.makeText(this, "User created", Toast.LENGTH_LONG).show()
+                            val intent = Intent(this@RegisterFragment, MainActivity::class.java)
+                            startActivity(intent)
                         }
-                        else{
-                        val message=task.exception!!.toString()
-                        Toast.makeText(this,"Error: $message",Toast.LENGTH_LONG)
+
+                    } else {
+                        val message = task.exception!!.toString()
+                        Toast.makeText(this, "Error: $message", Toast.LENGTH_LONG).show()
                         mAuth.signOut()
-                        progressDialog.dismiss()
-                        }
                     }
+
+                }
             }
         }
     }
 
-    private fun saveUserInfo(firstName: String, lastName: String, email: String,progressDialog:ProgressDialog) {
-        val currUserID=FirebaseAuth.getInstance().currentUser!!.uid
-        val usersRef:DatabaseReference=FirebaseDatabase.getInstance().reference.child("users")
-        val userMap=HashMap<String,Any>()
-        userMap["uid"]=currUserID
-        userMap["firstname"]=currUserID
-        userMap["lastname"]=currUserID
-        userMap["email"]=currUserID
-
-        usersRef.child(currUserID).setValue(userMap)
-            .addOnCompleteListener { task->
-                if(task.isSuccessful)
-                {
-
-                    progressDialog.dismiss()
-                    Toast.makeText(this,"Success",Toast.LENGTH_LONG)
-
-                    val intent= Intent(this@RegisterFragment,LoginFragment::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                    startActivity(intent)
-                    finish()
-                }
-                else{
-                    val message=task.exception!!.toString()
-                    Toast.makeText(this,"Error: $message",Toast.LENGTH_LONG)
-                    FirebaseAuth.getInstance().signOut()
-                    progressDialog.dismiss()
-                }
-            }
-    }
 }
