@@ -1,5 +1,6 @@
 package com.example.ksiegarniarobooszka.View.Fragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.example.ksiegarniarobooszka.R
 import com.example.ksiegarniarobooszka.View.MainActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -23,6 +25,7 @@ class UserFragment : Fragment(){
         return inflater.inflate(R.layout.fragment_user,container,false)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val mAuth:FirebaseAuth= FirebaseAuth.getInstance()         //jezeli chcemy aktualnie zalogowanego usera to pobieramy instancje firebaseAuth
@@ -32,7 +35,11 @@ class UserFragment : Fragment(){
         }else {
             Log.d("User", "current User: ${mAuth.currentUser!!.email}")
         }
-
+        myOrdersButton.setOnClickListener{
+            val fr:FragmentTransaction= parentFragmentManager.beginTransaction()
+            fr.replace(R.id.fragment_container,OrdersFragment())
+            fr.commit()
+        }
         logOutButton.setOnClickListener{
             mAuth.signOut()
             val intent = Intent(activity, MainActivity::class.java)

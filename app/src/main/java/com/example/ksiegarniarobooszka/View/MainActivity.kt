@@ -3,6 +3,7 @@ package com.example.ksiegarniarobooszka.View
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.example.ksiegarniarobooszka.R
 import com.example.ksiegarniarobooszka.View.Fragments.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -20,6 +21,10 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNav.setOnNavigationItemSelectedListener(navListener)
+
+        val fragmentTransaction:FragmentTransaction=supportFragmentManager.beginTransaction()
+        fragmentTransaction.add(R.id.fragment_container, UserFragment())
+        fragmentTransaction.commit()
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction().replace(

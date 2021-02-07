@@ -13,5 +13,6 @@
     <string name="user">Użytkownik: </string>
     <string name="total_price">Suma koszyka: </string>
     <string name="count">Ilość:</string>
+    <string name="user_orders">Moje Zamówienia</string>
 
 </resources>

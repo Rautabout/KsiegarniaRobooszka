@@ -3,17 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background= "@drawable/background"
-    android:orientation="horizontal">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/background"
+    android:orientation="horizontal"
+    tools:context=".View.Fragments.UserFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Temp"
         android:layout_margin="10dp"
-        android:textSize="30sp"
         android:id="@+id/currentUser"
+        android:fontFamily="@font/dancing_script"
+        android:textColor="@color/frog_green"
+        android:layout_marginTop="20dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/myOrdersButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Moje zamówienia"
+        app:layout_constraintTop_toBottomOf="@+id/currentUser"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/darkBlue"
+        android:textColor="@color/gray"/>
 
     <Button
         android:id="@+id/logOutButton"
@@ -21,6 +38,11 @@
         android:layout_height="wrap_content"
         android:text="Wyloguj się"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/darkBlue"
+        android:textColor="@color/gray"
+
          />
 
 
