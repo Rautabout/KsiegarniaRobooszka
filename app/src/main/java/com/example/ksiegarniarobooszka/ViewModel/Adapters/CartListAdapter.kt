@@ -60,11 +60,13 @@ class CartListAdapter (private val dataArray: ArrayList<BookCart>):RecyclerView.
             if(editTextNumber.getText().toString()!="")
             {
                 currentTransaction.child(bookCart.id.toString()).child("number").setValue(Integer.parseInt(editTextNumber.text.toString()))
+
+                if(Integer.parseInt(editTextNumber.getText().toString())>bookCart.quantity!!)
+                {
+                    editTextNumber.setText(bookCart.quantity.toString())
+                }
             }
-            if(Integer.parseInt(editTextNumber.getText().toString())>bookCart.quantity!!)
-            {
-                editTextNumber.setText(bookCart.quantity.toString())
-            }
+
         }
 
         }

@@ -1,6 +1,7 @@
 package com.example.ksiegarniarobooszka.View.Fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,29 +40,7 @@ class HomeFragment : Fragment() {
         newBookRecyclerView = fragmentView.findViewById(R.id.recycles_new_books)
         newBookRecyclerView.setHasFixedSize(true)
         newBookRecyclerView.layoutManager = LinearLayoutManager(context)
-        products.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                Toast.makeText(context, "There is a problem with database.", Toast.LENGTH_LONG)
-            }
 
-            override fun onDataChange(p0: DataSnapshot) {
-                if (p0.exists()) {
-                    for (h in p0.children) {
-                        val bal = h.getValue(Book::class.java)
-                        listOfItems.add(bal!!)
-                    }
-                    if (listOfItems.size > 5) {
-                        for (i in 1..5) {
-                            listOfNewItems.add(listOfItems[listOfItems.size - i])
-                        }
-                    } else {
-                        listOfNewItems = listOfItems
-                    }
-                    val adapter = BookListAdapter(listOfNewItems, context!!)
-                    newBookRecyclerView.setAdapter(adapter)
-                }
-            }
-        })
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
@@ -72,5 +51,35 @@ class HomeFragment : Fragment() {
             this.layoutManager = newBookLayoutManager
             this.adapter = newBookAdapter
         }
+
+        products.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                Toast.makeText(context, "Wystąpił problem z bazą danych.", Toast.LENGTH_LONG).show()
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                Log.d("w onDataChange", "Jestem ")
+                if (p0.exists()) {
+                    for (h in p0.children) {
+                        val bal = h.getValue(Book::class.java)
+                        listOfItems.add(bal!!)
+                    }
+                    if (listOfItems.size > 5) {
+                        Log.d("w forze", "Jestem ")
+                        for (i in 1..5) {
+                            listOfNewItems.add(listOfItems[listOfItems.size - i])
+                        }
+                    } else {
+                        listOfNewItems = listOfItems
+                    }
+                    if(context!=null)
+                    {
+                        val adapter = BookListAdapter(listOfNewItems, context!!)
+                        newBookRecyclerView.setAdapter(adapter)
+                    }
+
+                }
+            }
+        })
     }
 }

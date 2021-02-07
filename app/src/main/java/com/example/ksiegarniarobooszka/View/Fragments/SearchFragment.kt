@@ -58,8 +58,12 @@ class SearchFragment : Fragment(){
                         val bal = h.getValue(Book::class.java)
                         listOfItems.add(bal!!)
                     }
-                    val adapter = BookListAdapter(listOfItems,requireContext())
-                    bookRecyclerView.setAdapter(adapter)
+                    if(context!=null)
+                    {
+                        val adapter = BookListAdapter(listOfItems,context!!)
+                        bookRecyclerView.setAdapter(adapter)
+                    }
+
                 }
             }
         })
@@ -134,9 +138,12 @@ class SearchFragment : Fragment(){
                         }
                     }
                 }
+                if(context!=null)
+                {
+                    val adapter = BookListAdapter(listOfCurrentItems,context!!)
+                    bookRecyclerView.setAdapter(adapter)
+                }
 
-                val adapter = BookListAdapter(listOfCurrentItems,requireContext())
-                bookRecyclerView.setAdapter(adapter)
             }
 
         }
