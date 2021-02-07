@@ -2,47 +2,68 @@ package com.example.ksiegarniarobooszka.View.Fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
-import com.example.ksiegarniarobooszka.View.MainActivity
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.example.ksiegarniarobooszka.R
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.example.ksiegarniarobooszka.View.MainActivity
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.android.synthetic.main.fragment_user.*
+
+class LoginFragment : Fragment(){
 
 
-class LoginFragment : AppCompatActivity() {
-    private lateinit var loginButton: Button
-    private lateinit var loginRegisterButton: Button
-    private lateinit var loginEmail:EditText
-    private lateinit var loginPassword:EditText
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_login,container,false)
 
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_login)
-        loginButton=findViewById(R.id.loginButton)
-        loginRegisterButton=findViewById(R.id.loginRegisterButton)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
 
+        loginButton.setOnClickListener{
 
-
-
-
-
-
-        loginButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(view: View?) {
-                val intent = Intent(this@LoginFragment, MainActivity::class.java)
-                startActivity(intent)
+            val email = loginEmail.text.toString().trim()
+            val password = loginPassword.text.toString().trim()
+            if (email.isEmpty()) {
+                loginEmailWrapper.error = "Wprowadź swój e-mail"
+                loginEmailWrapper.requestFocus()
+                return@setOnClickListener
             }
-        })
-
-        loginRegisterButton.setOnClickListener(object :View.OnClickListener{
-            override fun onClick(v: View?) {
-                val intent =Intent(this@LoginFragment,RegisterFragment::class.java)
-                startActivity(intent)
+            else if (password.isEmpty()) {
+                loginPasswordWrapper.error = "Wprowadź swoje hasło"
+                loginPasswordWrapper.requestFocus()
+                return@setOnClickListener
             }
-        })
+            else {
+                mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener {
+                        task ->if(task.isSuccessful){
+                        val intent = Intent(activity, MainActivity::class.java)
+                        startActivity(intent)
+                }
+                else{
+                    val message = task.exception!!.toString()
+                    Toast.makeText(activity, "Error: $message", Toast.LENGTH_LONG).show()
+                }
+                }
+
+            }
+        }
+
+
+        loginRegisterButton.setOnClickListener {
+            val intent = Intent(activity, RegisterFragment::class.java)
+            startActivity(intent)
+        }
     }
 }
