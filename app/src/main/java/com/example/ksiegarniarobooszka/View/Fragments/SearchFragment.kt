@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,7 +49,7 @@ class SearchFragment : Fragment(){
         bookRecyclerView.layoutManager = LinearLayoutManager(context)
         products.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                Toast.makeText(context,"There is a problem with database.", Toast.LENGTH_LONG)
+                Toast.makeText(context,"Wystąpił problem z bazą danych.", Toast.LENGTH_LONG).show()
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -57,7 +58,7 @@ class SearchFragment : Fragment(){
                         val bal = h.getValue(Book::class.java)
                         listOfItems.add(bal!!)
                     }
-                    val adapter = BookListAdapter(listOfItems,context!!)
+                    val adapter = BookListAdapter(listOfItems,requireContext())
                     bookRecyclerView.setAdapter(adapter)
                 }
             }
@@ -134,7 +135,7 @@ class SearchFragment : Fragment(){
                     }
                 }
 
-                val adapter = BookListAdapter(listOfCurrentItems,context!!)
+                val adapter = BookListAdapter(listOfCurrentItems,requireContext())
                 bookRecyclerView.setAdapter(adapter)
             }
 
@@ -147,8 +148,8 @@ class SearchFragment : Fragment(){
 
         buttonSearch.setOnClickListener {
             view.hideKeyboard()
-            var author = editTextAuthor.text.toString()
-            var title = editTextTitle.text.toString()
+            var author = editTextAuthor.text.toString().trim()
+            var title = editTextTitle.text.toString().trim()
             listOfCurrentItems = ArrayList<Book>()
             if((author!=""))
             {

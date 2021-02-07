@@ -5,17 +5,43 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.ksiegarniarobooszka.Model.BookCart
 import com.example.ksiegarniarobooszka.R
+import com.example.ksiegarniarobooszka.ViewModel.Adapters.CartListAdapter
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_basket.*
+import kotlinx.android.synthetic.main.fragment_search.*
 
 class BasketFragment : Fragment(){
+
+    private lateinit var basketBookAdapter: CartListAdapter
+    private lateinit var basketBookLayoutManager: LinearLayoutManager
+    private lateinit var basketBookRecyclerView: RecyclerView
+    private lateinit var fragmentView:View
+    var listOfItems = ArrayList<BookCart>()
+    //var listOfCurrentItems = ArrayList<Book>()
+    val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    val uid=FirebaseAuth.getInstance().uid?:""
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        //val firebase = FirebaseDatabase.getInstance()
+
+        basketBookLayoutManager = LinearLayoutManager(context)
+        basketBookAdapter= CartListAdapter(listOfItems)
+        fragmentView = LayoutInflater.from(activity).inflate(R.layout.fragment_basket, container, false)
+        basketBookRecyclerView = fragmentView.findViewById(R.id.recycler_shoppingCart)
+        basketBookRecyclerView.setHasFixedSize(true)
+        basketBookRecyclerView.layoutManager = LinearLayoutManager(context)
+
         return inflater.inflate(R.layout.fragment_basket,container,false)
     }
 
@@ -23,10 +49,42 @@ class BasketFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
         val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
         if (mAuth.currentUser!=null){
-            textView_userName.text=mAuth.currentUser!!.email
+            textView_userName.text=mAuth.currentUser!!.email!!.split("@")[0]
         }
         else{
-            textView_userName.text="Jesteś nie zalogowany!"
+            textView_userName.text="-"
         }
+        basketBookRecyclerView=recycler_shoppingCart.apply {
+            this.layoutManager = basketBookLayoutManager
+            this.adapter = basketBookAdapter
+        }
+
+        if (mAuth.currentUser!=null){
+            val currentTransaction = FirebaseDatabase.getInstance().getReference("currentTransactions/$uid")
+
+
+            currentTransaction.addValueEventListener(object : ValueEventListener {
+                override fun onCancelled(p0: DatabaseError) {
+                    Toast.makeText(context,"Wystąpił problem z bazą danych.", Toast.LENGTH_LONG).show()
+                }
+
+                override fun onDataChange(p0: DataSnapshot) {
+                    listOfItems = ArrayList<BookCart>()
+                    var toPay = 0.0
+                    if(p0.exists()){
+                        for (h in p0.children){
+                            val book = h.getValue(BookCart::class.java)
+                            listOfItems.add(book!!)
+                            toPay += book.price!! * book.number!!
+                        }
+                        val adapter = CartListAdapter(listOfItems)
+                        basketBookRecyclerView.setAdapter(adapter)
+                        textView_priceValue.setText(toPay.toString())
+                    }
+                }
+            })
+        }
+
+
     }
 }

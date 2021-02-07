@@ -53,7 +53,7 @@ class LoginFragment : Fragment(){
                 }
                 else{
                     val message = task.exception!!.toString()
-                    Toast.makeText(activity, "Error: $message", Toast.LENGTH_LONG).show()
+                    Toast.makeText(activity, "Nie ma takiego użytkownika w bazie.", Toast.LENGTH_LONG).show()
                 }
                 }
 
