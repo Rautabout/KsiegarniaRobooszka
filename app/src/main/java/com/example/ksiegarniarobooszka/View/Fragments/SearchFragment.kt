@@ -1,5 +1,6 @@
 package com.example.ksiegarniarobooszka.View.Fragments
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
@@ -7,6 +8,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
@@ -27,6 +30,7 @@ class SearchFragment : Fragment(){
     private lateinit var products:DatabaseReference
     private lateinit var fragmentView:View
     var listOfItems = ArrayList<Book>()
+    var listOfCurrentItems = ArrayList<Book>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -101,10 +105,58 @@ class SearchFragment : Fragment(){
             spinnerBookCategories.adapter = adapter
         }
 
+        spinnerBookCategories?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                editTextAuthor.setText("")
+                editTextTitle.setText("")
+                view?.hideKeyboard()
+                listOfCurrentItems = ArrayList<Book>()
+                var genre = ""
+                when (position) {
+                    0 -> listOfCurrentItems = listOfItems
+                    1 -> genre = "crime"
+                    2 -> genre = "guide"
+                    3 -> genre = "horror"
+                    4 -> genre = "comic"
+                    5 -> genre = "fantasy"
+                    6 -> genre = "thriller"
+                    7 -> genre = "Sci/fi"
+                }
+                if(genre != "" ) {
+                    for (item in listOfItems) {
+                        if (item.genre == genre) {
+                            listOfCurrentItems.add(item)
+                        }
+                    }
+                }
+
+                val adapter = BookListAdapter(listOfCurrentItems,context!!)
+                bookRecyclerView?.setAdapter(adapter)
+            }
+
+        }
+
         bookRecyclerView=recycler_search.apply {
             this.layoutManager = bookLayoutManager
             this.adapter = bookAdapter
         }
+
+        buttonSearch.setOnClickListener {
+            view.hideKeyboard()
+            if((editTextAuthor.text.toString()!="")&&(editTextTitle.text.toString()!=""))
+            {
+
+            }
+        }
+    }
+
+    fun View.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
 }
