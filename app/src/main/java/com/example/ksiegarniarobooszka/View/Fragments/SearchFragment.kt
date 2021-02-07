@@ -17,8 +17,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ksiegarniarobooszka.R
-import com.example.ksiegarniarobooszka.Model.Book
-import com.example.ksiegarniarobooszka.ViewModel.Adapters.BookListAdapter
+import com.example.ksiegarniarobooszka.View.Book
+import com.example.ksiegarniarobooszka.View.BookListAdapter
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_search.*
 
@@ -41,7 +41,7 @@ class SearchFragment : Fragment(){
         val firebase = FirebaseDatabase.getInstance()
         products = firebase.getReference("products")
         bookLayoutManager = LinearLayoutManager(context)
-        bookAdapter= BookListAdapter(listOfItems, requireContext())
+        bookAdapter= BookListAdapter(listOfItems, context!!)
         fragmentView = LayoutInflater.from(activity).inflate(R.layout.fragment_search, container, false)
         bookRecyclerView = fragmentView?.findViewById(R.id.recycler_search)
         bookRecyclerView?.setHasFixedSize(true)

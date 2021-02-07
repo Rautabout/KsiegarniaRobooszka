@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Aplikacje_mobilne_dla_systemu_Android.KsiegarniaRobooszka.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Aplikacje_mobilne_dla_systemu_Android.KsiegarniaRobooszka.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/KsiegarniaRobooszka.iml" filepath="$PROJECT_DIR$/.idea/modules/KsiegarniaRobooszka.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/KsiegarniaRobooszka.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/KsiegarniaRobooszka.app.iml" />
     </modules>
