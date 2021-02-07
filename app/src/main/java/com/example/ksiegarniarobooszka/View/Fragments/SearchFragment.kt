@@ -182,7 +182,7 @@ class SearchFragment : Fragment(){
                     listOfCurrentItems = listOfItems
                 }
             }
-            val adapter = BookListAdapter(listOfCurrentItems,context!!)
+            val adapter = BookListAdapter(listOfCurrentItems,requireContext())
             bookRecyclerView.setAdapter(adapter)
         }
 
