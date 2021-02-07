@@ -13,7 +13,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="5dp"
-        android:backgroundTint="@color/darkDarkBlueTransparent"
+        android:backgroundTint="@color/white"
         >
 
 
@@ -23,9 +23,10 @@
 
             <ImageView
                 android:id="@+id/imageBook"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TableLayout
@@ -41,10 +42,17 @@
                         android:id="@+id/textViewTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:text="TextView"
-                        android:textColor="@color/gray"
-                        android:textSize="20dp" />
+                        android:textColor="@color/darkDarkBlue"
+                        android:textSize="25dp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/temp2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1" />
                 </TableRow>
 
                 <TableRow
@@ -55,23 +63,30 @@
                         android:id="@+id/textViewAuthor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:text="TextView"
-                        android:textColor="@color/gray"
+                        android:textColor="@color/darkDarkBlue"
                         android:textSize="20dp" />
+                    <TextView
+                        android:id="@+id/temp3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1" />
+
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:id="@+id/textViewPriceName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:text="@string/price"
-                        android:textColor="@color/gray"
+                        android:textColor="@color/darkDarkBlue"
                         android:textSize="15dp" />
 
                     <TextView
@@ -80,7 +95,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="TextView"
-                        android:textColor="@color/gray"
+                        android:textColor="@color/darkDarkBlue"
                         android:textSize="15dp" />
                 </TableRow>
 
@@ -92,9 +107,9 @@
                         android:id="@+id/textViewShopName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:text="@string/shop"
-                        android:textColor="@color/gray"
+                        android:textColor="@color/darkDarkBlue"
                         android:textSize="15dp" />
                     <TextView
                         android:id="@+id/textViewShop"
@@ -102,7 +117,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="TextView"
-                        android:textColor="@color/gray"
+                        android:textColor="@color/darkDarkBlue"
                         android:textSize="15dp" />
                 </TableRow>
 
