@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/KsiegarniaRobooszka.iml" filepath="$PROJECT_DIR$/.idea/modules/KsiegarniaRobooszka.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/KsiegarniaRobooszka.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/KsiegarniaRobooszka.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Ksiegarnia_Robooszka.KsiegarniaRobooszka.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Ksiegarnia_Robooszka.KsiegarniaRobooszka.app.iml" />
     </modules>
   </component>
 </project>
