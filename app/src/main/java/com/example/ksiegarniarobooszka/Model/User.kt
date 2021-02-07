@@ -1,3 +1,3 @@
 package com.example.ksiegarniarobooszka.Model
 
-class User(val uid:String,val firstname: String, val lastname: String,val email: String)
+data class User(val uid:String?=null,val firstname: String?=null, val lastname: String?=null,val email: String?=null)
