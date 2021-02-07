@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,7 +44,7 @@ class SearchFragment : Fragment(){
         bookRecyclerView?.layoutManager = LinearLayoutManager(context)
         products?.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                Toast.makeText(context,"There is a problem with database.", Toast.LENGTH_LONG)
             }
 
             override fun onDataChange(p0: DataSnapshot) {
