@@ -59,7 +59,7 @@ class RegisterFragment : AppCompatActivity() {
                         val user = User(uid,firstName, lastName, email)
                         val ref=FirebaseDatabase.getInstance().getReference("users/$uid")
                         ref.setValue(user).addOnSuccessListener {
-                            Toast.makeText(this, "User created", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, "Utworzono użytkownika", Toast.LENGTH_LONG).show()
                             val intent = Intent(this@RegisterFragment, MainActivity::class.java)
                             startActivity(intent)
                         }

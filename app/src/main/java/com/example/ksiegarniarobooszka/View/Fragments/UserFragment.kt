@@ -35,11 +35,7 @@ class UserFragment : Fragment(){
             currentUser.text="Witaj, ${mAuth.currentUser!!.email}" //tutaj edittext w fragment_user
             Log.d("User", "current User: ${mAuth.currentUser!!.email}")
         }
-        myOrdersButton.setOnClickListener{
-            val fr:FragmentTransaction= parentFragmentManager.beginTransaction()
-            fr.replace(R.id.fragment_container,OrdersFragment())
-            fr.commit()
-        }
+
         logOutButton.setOnClickListener{
             mAuth.signOut()
             val intent = Intent(activity, MainActivity::class.java)
